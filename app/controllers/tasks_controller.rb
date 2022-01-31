@@ -22,7 +22,8 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-
+    # La variable owner por defecto viene vacia ya que no se llena en el formulario, pero para esto podemos acceder a current_user que es un metodo proporcionado por devise que indica el usuario logueado
+    @task.owner = current_user
     respond_to do |format|
       if @task.save
         format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
