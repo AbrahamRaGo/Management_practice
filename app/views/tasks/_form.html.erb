@@ -1,4 +1,4 @@
-<%= form_with(model: task, local: true) do |form| %>
+<%= form_for @task do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -23,13 +23,26 @@
 
   <div class="field">
     <%= form.label :due_date %>
-    <%= form.text_field :due_date %>
+    <%= form.date_select :due_date %>
   </div>
 
   <div class="field">
     <%= form.label :category_name %>
     <%= form.select :category_id, Category.all.collect {|x| [x.name, x.id]}, {} %>
   </div>
+
+  <div class="field">
+    <%= form.fields_for :participating_users do |f|%>
+      <div class="field">
+        <%= f.label :participants %>
+        <%= f.select :user_id, (User.all - [current_user]).collect{|x| [x.email, x.id]},{}%>
+        <%= f.label :role%>
+        <%= f.number_field :role, in: 1..2, step:1 %>
+      </div>
+    <% end%>
+  <div>
+
+  
 
   <div class="actions">
     <%= form.submit %>
