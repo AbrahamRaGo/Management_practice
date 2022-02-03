@@ -33,7 +33,7 @@ docker-compose up
 3. Enter to container bash
 
 ```
-docker exec -it ruby-web-1 bash
+docker exec -it management_practice-web-1 bash
 ```
 
 4. Inside bash create de database
