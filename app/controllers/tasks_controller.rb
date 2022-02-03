@@ -1,9 +1,17 @@
 class TasksController < ApplicationController
+  # Metodo propuesto por la gema devise la cual le indicamos que a partir de una serie de convenciones tomaremos el ability y todo lo asociado con la tarea se asumirá como regla de acceso a este controlador
+  load_and_authorize_resource
+
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    # El metodo group evitará los duplicados
+    @tasks = Task.joins(:participants)
+    .where('owner_id = ? OR participants.user_id = ?',
+        current_user.id,
+        current_user.id
+    ).group(:id)
   end
 
   # GET /tasks/1 or /tasks/1.json
