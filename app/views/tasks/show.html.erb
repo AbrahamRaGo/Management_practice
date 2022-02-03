@@ -20,5 +20,15 @@
   <%= @task.category.name %>
 </p>
 
+<p>
+  <strong> Participants: </strong>
+  <ul>
+    <% @participants.each do |participant|%>
+      <li><%= User.find_by('id = ?', participant.user_id).email %> </li>
+      Rol: <%= participant.role %> 
+    <% end %>
+  </ul>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

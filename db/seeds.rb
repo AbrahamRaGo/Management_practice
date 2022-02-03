@@ -20,7 +20,7 @@ puts 'Users has been created'
 
 ['desarrollo', 'mercadeo', 'conceptualización', 'ejercicios'].each do |name|
 
-Category.create name: name, description: "Tarea de #{name}"
+Category.create name: name, description: '--'
 
 end
 

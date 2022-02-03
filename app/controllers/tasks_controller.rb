@@ -16,6 +16,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1 or /tasks/1.json
   def show
+    @participants = Participant.joins(:user).where('task_id = ?', params[:id])
   end
 
   # GET /tasks/new
@@ -60,7 +61,6 @@ class TasksController < ApplicationController
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy
-
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
       format.json { head :no_content }
@@ -80,7 +80,7 @@ class TasksController < ApplicationController
         :description, 
         :due_date, 
         :category_id,
-        participating_users_attributes: [:user_id, :role, :id, :_destroy]
+        participating_users_attributes: [:id, :role, :user_id, :_destroy]
       )
     end
 end
